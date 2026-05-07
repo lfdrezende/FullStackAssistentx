@@ -1,4 +1,4 @@
-package br.com.assistentx.fintech.model;
+package br.com.fiap.assistentx.model;
 
 public class Entradas extends Transacoes {
 

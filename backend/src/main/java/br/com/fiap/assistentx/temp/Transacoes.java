@@ -1,4 +1,4 @@
-package br.com.assistentx.fintech.model;
+package br.com.fiap.assistentx.model;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -25,7 +25,7 @@ public abstract class Transacoes implements Iterable<Transacao>{
     public abstract String getDescricao();
 
     public Transacoes adicionarTransacao(Transacao transacao) {
-        if (transacao.getTipo() == getTipo()) {
+        if (transacao.getTipo().equals(getTipo())) {
             transacoes.add(transacao);
         } else {
             System.out.println("Tipo de transação inválido para esta operação.");
