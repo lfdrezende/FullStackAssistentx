@@ -1,4 +1,6 @@
-package br.com.fiap.assistentx.model;
+package br.com.fiap.assistentx.temp;
+
+import br.com.fiap.assistentx.model.Transacao;
 
 import java.util.ArrayList;
 import java.util.Iterator;

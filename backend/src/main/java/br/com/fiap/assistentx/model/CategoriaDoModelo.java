@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 
 @Entity
 @Table(name = "t_ax_categoria")
-public class CategoriaModelo {
+public class CategoriaDoModelo {
 
     @Id
     @Column(name = "id_categoria")
@@ -16,9 +16,9 @@ public class CategoriaModelo {
     @Column(name = "ds_categoria")
     private String descricao;
 
-    public CategoriaModelo(){}
+    public CategoriaDoModelo(){}
 
-    public CategoriaModelo(int id, String nome, String descricao) {
+    public CategoriaDoModelo(int id, String nome, String descricao) {
         this.id = id;
         this.nome = nome;
         this.descricao = descricao;

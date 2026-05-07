@@ -1,6 +1,6 @@
 package br.com.fiap.assistentx.dto;
 
-public class ModeloDTO {
+public class UsuarioModeloDTO {
 
     private Integer usuarioId;
     private Integer modeloId;

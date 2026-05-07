@@ -1,33 +1,75 @@
-package br.com.assistentx.fintech.model;
+package br.com.fiap.assistentx.model;
 
+import jakarta.persistence.*;
 import java.time.LocalDate;
 import java.time.OffsetDateTime;
 import java.time.temporal.ChronoUnit;
 
+@Entity
+@Table(name = "t_ax_investimento")
+@AttributeOverrides({
+        @AttributeOverride(name = "valor", column = @Column(name = "vl_inicial")),
+        @AttributeOverride(name = "dataHora", column = @Column(name = "dt_inicio"))
+})
 public class Investimento extends EntidadeFinanceira {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_investimento")
+    @SequenceGenerator(
+            name = "seq_investimento",
+            sequenceName = "sequencia_investimento",
+            allocationSize = 1
+    )
+    @Column(name = "id_investimento")
+    private Integer id;
+
+    @Column(name = "vl_atual")
     private double montanteAtual;
+
+    @ManyToOne
+    @JoinColumn(name = "id_investimento_tipo")
     private TipoInvestimento tipo;
+
+    @Transient
     private double ultimaReceitaMensal;
+
+    @Transient
     private Double jurosEstimados;
 
-    public Investimento(Usuario usuario,double valor, double montanteAtual, TipoInvestimento tipo, OffsetDateTime dataHora) {
-        this(usuario, valor, montanteAtual, tipo, dataHora, null, 0.0, 0);
+    public Investimento() {}
+
+    public Investimento(
+            Usuario usuario,
+            double valor,
+            double montanteAtual,
+            TipoInvestimento tipo,
+            OffsetDateTime dataHora
+    ) {
+        this(usuario, valor, montanteAtual, tipo, dataHora,null);
     }
 
-    public Investimento(Usuario usuario,double valor, double montanteAtual, TipoInvestimento tipo, OffsetDateTime dataHora, int id) {
-        this(usuario, valor, montanteAtual, tipo, dataHora, null, 0.0, id);
-    }
+    public Investimento(
+            Usuario usuario,
+            double valor,
+            double montanteAtual,
+            TipoInvestimento tipo,
+            OffsetDateTime dataHora,
+            Integer id
+    ) {
+        super(usuario, valor, dataHora);
 
-    public Investimento(Usuario usuario, double valor, double montanteAtual, TipoInvestimento tipo, OffsetDateTime dataHora, Double jurosEstimados, double ultimaReceitaMensal, int id) {
-        super(usuario, valor, dataHora, id);
-        if (montanteAtual <= 0) {
-            throw new IllegalArgumentException("O valor do investimento não pode ser negativo.");
+        if (valor < 0) {
+            throw new IllegalArgumentException("O valor inical do investimento não pode ser negativo.");
         }
+
         this.montanteAtual = montanteAtual;
         this.tipo = tipo;
-        this.jurosEstimados = jurosEstimados;
-        this.ultimaReceitaMensal = ultimaReceitaMensal;
+        this.id = id;
     }
+
+    // ======================
+    // LÓGICA DE NEGÓCIO (OK)
+    // ======================
 
     private long calcularMeses(){
         return ChronoUnit.MONTHS.between(
@@ -35,13 +77,13 @@ public class Investimento extends EntidadeFinanceira {
                 LocalDate.now());
     }
 
-    public Investimento calcularJuros() {
+    public void calcularJuros() {
 
         long meses = calcularMeses();
 
         if (meses <= 0) {
             this.jurosEstimados = 0.0;
-            return this;
+            return;
         }
 
         if (this.valor == 0) {
@@ -52,16 +94,15 @@ public class Investimento extends EntidadeFinanceira {
                 (this.montanteAtual / this.valor),
                 (1.0 / meses)
         ) - 1;
-        return this;
     }
 
-    public Investimento calcularUltimaReceitaMensal() {
+    public void calcularUltimaReceitaMensal() {
 
         long meses = calcularMeses();
 
         if (meses <= 0) {
             this.ultimaReceitaMensal = 0;
-            return this;
+            return;
         }
 
         double taxaMensal = Math.pow(
@@ -70,44 +111,53 @@ public class Investimento extends EntidadeFinanceira {
         ) - 1;
 
         this.ultimaReceitaMensal = this.montanteAtual * taxaMensal;
-        return this;
     }
 
-    public double getValorAtual(){
+    // ======================
+    // GETTERS E SETTERS
+    // ======================
+
+    public double getMontanteAtual() {
         return montanteAtual;
     }
 
-    public double getValorInicial() {
-        return valor;
+    public double getValorAtual() {
+        return montanteAtual;
     }
 
-    double getUltimaReceitaMensal (){
+    public double getUltimaReceitaMensal() {
         return ultimaReceitaMensal;
     }
 
-    public OffsetDateTime getData (){
-        return dataHora;
+    public Double getJurosEstimados() {
+        return jurosEstimados;
     }
-    
-    public TipoInvestimento getTipo () {
+
+    public TipoInvestimento getTipo() {
         return tipo;
     }
 
-    public String exibir() {
-
-        String jurosFormatado =
-                (jurosEstimados == null)
-                        ? "N/A"
-                        : String.format("%.2f%%", jurosEstimados * 100);
-
-        return String.format(
-                "Montante: %.2f, Tipo: %s, Juros: %s, Receita no último mês: %.2f, ID: %d",
-                montanteAtual,
-                tipo.getNome(),
-                jurosFormatado,
-                ultimaReceitaMensal,
-                id
-        );
+    public Integer getId() {
+        return id;
     }
 
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public void setMontanteAtual(double montanteAtual) {
+        this.montanteAtual = montanteAtual;
+    }
+
+    public void setTipo(TipoInvestimento tipo) {
+        this.tipo = tipo;
+    }
+
+    public void setUltimaReceitaMensal(double ultimaReceitaMensal) {
+        this.ultimaReceitaMensal = ultimaReceitaMensal;
+    }
+
+    public void setJurosEstimados(Double jurosEstimados) {
+        this.jurosEstimados = jurosEstimados;
+    }
 }

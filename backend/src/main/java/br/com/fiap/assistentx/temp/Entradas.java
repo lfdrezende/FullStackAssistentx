@@ -1,4 +1,4 @@
-package br.com.fiap.assistentx.model;
+package br.com.fiap.assistentx.temp;
 
 public class Entradas extends Transacoes {
 
