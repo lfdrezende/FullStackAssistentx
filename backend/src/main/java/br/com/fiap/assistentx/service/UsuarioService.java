@@ -1,5 +1,6 @@
 package br.com.fiap.assistentx.service;
 
+import br.com.fiap.assistentx.dto.UsuarioDTO;
 import br.com.fiap.assistentx.dto.UsuarioModeloDTO;
 import br.com.fiap.assistentx.model.Usuario;
 import br.com.fiap.assistentx.repository.ModeloRepository;
@@ -16,11 +17,18 @@ public class UsuarioService {
     @Autowired
     private ModeloRepository modeloRepository;
 
-    public Usuario buscarPorId(Integer id){
-        return HelperService.buscar(usuarioRepository,id,"Usuário");
+    public UsuarioDTO buscarDTOPorId(Integer id){
+
+        Usuario usuario = HelperService.buscar(
+                usuarioRepository,
+                id,
+                "Usuário"
+        );
+
+        return toDTO(usuario);
     }
 
-    public Usuario atualizarModelo(UsuarioModeloDTO dto){
+    public UsuarioDTO atualizarModelo(UsuarioModeloDTO dto){
         Usuario usuario = HelperService.buscar(usuarioRepository,
                 dto.getUsuarioId(),
                 "Usuário");
@@ -29,6 +37,21 @@ public class UsuarioService {
                 dto.getModeloId(),
                 "Modelo"));
 
-        return usuarioRepository.save(usuario);
+        return toDTO(usuarioRepository.save(usuario));
+    }
+
+    private UsuarioDTO toDTO(Usuario usuario){
+
+        return new UsuarioDTO(
+                usuario.getId(),
+                usuario.getEmail(),
+                usuario.getNome(),
+                usuario.getModelo().getId(),
+                usuario.getModelo().getNome()
+        );
+    }
+
+    public Usuario buscarPorId(Integer id){
+        return HelperService.buscar(usuarioRepository,id,"Usuário");
     }
 }

@@ -2,6 +2,7 @@ package br.com.fiap.assistentx.service;
 
 
 import br.com.fiap.assistentx.dto.TransacaoDTO;
+import br.com.fiap.assistentx.model.Investimento;
 import br.com.fiap.assistentx.model.Transacao;
 import br.com.fiap.assistentx.repository.OrigemTransacaoRepository;
 import br.com.fiap.assistentx.repository.TransacaoRepository;
@@ -10,7 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class TransacaoService {
@@ -56,34 +56,29 @@ public class TransacaoService {
         return toDTO(transacaoRepository.save(novaTransacao));
     }
 
-    public TransacaoDTO buscarPorId(Integer id, String tipo) {
-
-        Transacao transacao = HelperService.buscar(
-                transacaoRepository,
-                id,
-                "Transação"
-        );
+    public TransacaoDTO buscarPorId(Integer usuarioId, Integer transacaoId, String tipo) {
+        Transacao transacao = HelperService.buscarDoUsuario(transacaoRepository
+                .findByIdAndUsuarioId(transacaoId, usuarioId),"Transação");
 
         validarTipo(transacao, tipo);
 
         return toDTO(transacao);
     }
 
-    public List<TransacaoDTO> listar(String tipo) {
-
+    public List<TransacaoDTO> listar(Integer usuarioId, String tipo) {
         List<Transacao> transacoes;
 
         if (tipo.equals("E")) {
-            transacoes = transacaoRepository.findByValorGreaterThan(0);
+            transacoes = transacaoRepository.findByUsuarioIdAndValorGreaterThan(usuarioId, 0);
         } else if (tipo.equals("S")) {
-            transacoes = transacaoRepository.findByValorLessThan(0);
+            transacoes = transacaoRepository.findByUsuarioIdAndValorLessThan(usuarioId, 0);
         } else {
             throw new RuntimeException("Tipo inválido");
         }
 
         return transacoes.stream()
                 .map(this::toDTO)
-                .collect(Collectors.toList());
+                .toList();
     }
 
     public TransacaoDTO atualizar(TransacaoDTO transacaoDTO, String tipo){
@@ -106,16 +101,14 @@ public class TransacaoService {
         return toDTO(transacaoRepository.save(transacaoAtualizada));
     }
 
-    public void excluir(Integer id, String tipo){
-        Transacao transacao = HelperService.buscar(
-                transacaoRepository,
-                id,
-                "Transação"
-        );
+    public void excluir(Integer usuarioId, Integer transacaoId, String tipo) {
+
+        Transacao transacao = HelperService.buscarDoUsuario(transacaoRepository
+                .findByIdAndUsuarioId(transacaoId, usuarioId),"Transação");
 
         validarTipo(transacao, tipo);
 
-        transacaoRepository.deleteById(id);
+        transacaoRepository.delete(transacao);
     }
 
     private TransacaoDTO toDTO(Transacao transacao) {

@@ -16,7 +16,7 @@ public class TipoInvestimentoController {
     @Autowired
     private TipoInvestimentoService tipoInvestimentoService;
 
-    @GetMapping("/investimento/tipos")
+    @GetMapping("/investimentos/tipos")
     @ResponseStatus(HttpStatus.OK)
     public List<TipoInvestimento> listar() {
         return tipoInvestimentoService.listar();

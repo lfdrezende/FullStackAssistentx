@@ -41,9 +41,15 @@ public class InvestimentoService {
         return toDTO(investimentoSalvo);
     }
 
-    public InvestimentoDTO buscarPorId(Integer id){
-        return toDTO(HelperService.buscar(investimentoRepository,
-                id,"Investimento"));
+    public InvestimentoDTO buscarPorId(Integer usuarioId, Integer investimentoId) {
+
+        Investimento investimento = HelperService.buscarDoUsuario(investimentoRepository
+                .findByIdAndUsuarioId(investimentoId, usuarioId), "Investimento");
+
+        investimento.calcularJuros();
+        investimento.calcularUltimaMensalidade();
+
+        return toDTO(investimento);
     }
 
     public InvestimentoDTO atualizar(InvestimentoDTO investimentoDTO){
@@ -71,18 +77,22 @@ public class InvestimentoService {
         return toDTO(investimentoRepository.save(investimentoAtualizado));
     }
 
-    public void excluir(Integer id){
+    public void excluir(Integer usuarioId, Integer investimentoId) {
 
-        HelperService.buscar(investimentoRepository,
-                id,"Investimento");
+        Investimento investimento = HelperService.buscarDoUsuario(investimentoRepository
+                .findByIdAndUsuarioId(investimentoId, usuarioId), "Investimento");
 
-        investimentoRepository.deleteById(id);
+        investimentoRepository.delete(investimento);
     }
 
-    public List<InvestimentoDTO> listar(){
+    public List<InvestimentoDTO> listar(Integer usuarioId){
 
-        return investimentoRepository.findAll()
+        return investimentoRepository.findByUsuarioId(usuarioId)
                 .stream()
+                .peek(investimento -> {
+                    investimento.calcularJuros();
+                    investimento.calcularUltimaMensalidade();
+                })
                 .map(this::toDTO)
                 .toList();
     }
@@ -94,13 +104,12 @@ public class InvestimentoService {
                 investimento.getTipo().getId(),
                 investimento.getValor(),
                 investimento.getValorAtual(),
-                investimento.getUltimaReceitaMensal(),
+                investimento.getUltimaMensalidade(),
                 investimento.getJurosEstimados(),
                 investimento.getTipo().getNome(),
                 investimento.getTipo().getClassificacao(),
                 investimento.getDataHora()
         );
     }
-
 
 }

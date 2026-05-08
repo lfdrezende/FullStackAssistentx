@@ -31,7 +31,7 @@ public class Investimento extends EntidadeFinanceira {
     private TipoInvestimento tipo;
 
     @Transient
-    private double ultimaReceitaMensal;
+    private double ultimaMensalidade;
 
     @Transient
     private Double jurosEstimados;
@@ -96,12 +96,12 @@ public class Investimento extends EntidadeFinanceira {
         ) - 1;
     }
 
-    public void calcularUltimaReceitaMensal() {
+    public void calcularUltimaMensalidade() {
 
         long meses = calcularMeses();
 
         if (meses <= 0) {
-            this.ultimaReceitaMensal = 0;
+            this.ultimaMensalidade = 0;
             return;
         }
 
@@ -110,7 +110,7 @@ public class Investimento extends EntidadeFinanceira {
                 (1.0 / meses)
         ) - 1;
 
-        this.ultimaReceitaMensal = this.montanteAtual * taxaMensal;
+        this.ultimaMensalidade = this.montanteAtual * taxaMensal;
     }
 
     // ======================
@@ -125,8 +125,8 @@ public class Investimento extends EntidadeFinanceira {
         return montanteAtual;
     }
 
-    public double getUltimaReceitaMensal() {
-        return ultimaReceitaMensal;
+    public double getUltimaMensalidade() {
+        return ultimaMensalidade;
     }
 
     public Double getJurosEstimados() {
@@ -153,8 +153,8 @@ public class Investimento extends EntidadeFinanceira {
         this.tipo = tipo;
     }
 
-    public void setUltimaReceitaMensal(double ultimaReceitaMensal) {
-        this.ultimaReceitaMensal = ultimaReceitaMensal;
+    public void setUltimaMensalidade(double ultimaMensalidade) {
+        this.ultimaMensalidade = ultimaMensalidade;
     }
 
     public void setJurosEstimados(Double jurosEstimados) {

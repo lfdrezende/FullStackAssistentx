@@ -1,5 +1,6 @@
 package br.com.fiap.assistentx.service;
 
+import br.com.fiap.assistentx.dto.OrigemTransacaoDTO;
 import br.com.fiap.assistentx.model.OrigemTransacao;
 import br.com.fiap.assistentx.repository.OrigemTransacaoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +14,16 @@ public class OrigemTransacaoService {
     @Autowired
     private OrigemTransacaoRepository origemTransacaoRepository;
 
-    public List<OrigemTransacao> listar(){
-        return origemTransacaoRepository.findAll();
+    public List<OrigemTransacaoDTO> listar() {
+
+        List<OrigemTransacao> origens = origemTransacaoRepository.findAll();
+
+        return origens.stream()
+                .map(origem -> new OrigemTransacaoDTO(
+                        origem.getId(),
+                        origem.getNome(),
+                        origem.getTipo()
+                ))
+                .toList();
     }
 }

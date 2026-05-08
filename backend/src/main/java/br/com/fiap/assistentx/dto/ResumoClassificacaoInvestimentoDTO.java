@@ -1,6 +1,6 @@
 package br.com.fiap.assistentx.dto;
 
-public class ClassificacaoResumoDTO {
+public class ResumoClassificacaoInvestimentoDTO {
 
     private String classificacao;
 

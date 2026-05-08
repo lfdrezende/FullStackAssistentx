@@ -2,13 +2,13 @@ package br.com.fiap.assistentx.dto;
 
 import java.util.List;
 
-public class PatrimonioResumoDTO {
+public class ResumoPatrimonioDTO {
     private double valorInicialTotal;
     private double valorAtualTotal;
     private double jurosEstimados;
     private double ultimaMensalidade;
 
-    private List<ClassificacaoResumoDTO> classificacoes;
+    private List<ResumoClassificacaoInvestimentoDTO> classificacoes;
 
     public double getValorInicialTotal() {
         return valorInicialTotal;
@@ -42,11 +42,11 @@ public class PatrimonioResumoDTO {
         this.ultimaMensalidade = ultimaMensalidade;
     }
 
-    public List<ClassificacaoResumoDTO> getClassificacoes() {
+    public List<ResumoClassificacaoInvestimentoDTO> getClassificacoes() {
         return classificacoes;
     }
 
-    public void setClassificacoes(List<ClassificacaoResumoDTO> classificacoes) {
+    public void setClassificacoes(List<ResumoClassificacaoInvestimentoDTO> classificacoes) {
         this.classificacoes = classificacoes;
     }
 }

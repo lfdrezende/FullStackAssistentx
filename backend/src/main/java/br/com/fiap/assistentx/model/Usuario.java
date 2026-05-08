@@ -56,4 +56,6 @@ public class Usuario {
     public void setModelo(Modelo modelo) {
         this.modelo = modelo;
     }
+
+    public void setId(Integer id) {this.id = id;}
 }

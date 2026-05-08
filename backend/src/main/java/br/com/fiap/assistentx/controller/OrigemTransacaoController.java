@@ -1,7 +1,7 @@
 package br.com.fiap.assistentx.controller;
 
 
-import br.com.fiap.assistentx.model.OrigemTransacao;
+import br.com.fiap.assistentx.dto.OrigemTransacaoDTO;
 import br.com.fiap.assistentx.service.OrigemTransacaoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -18,7 +18,7 @@ public class OrigemTransacaoController {
 
     @GetMapping("/transacoes/origens")
     @ResponseStatus(HttpStatus.OK)
-    public List<OrigemTransacao> listar() {
+    public List<OrigemTransacaoDTO> listar() {
         return origemTransacaoService.listar();
     }
 }

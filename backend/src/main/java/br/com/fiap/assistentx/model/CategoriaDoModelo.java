@@ -18,13 +18,13 @@ public class CategoriaDoModelo {
 
     public CategoriaDoModelo(){}
 
-    public CategoriaDoModelo(int id, String nome, String descricao) {
+    public CategoriaDoModelo(Integer id, String nome, String descricao) {
         this.id = id;
         this.nome = nome;
         this.descricao = descricao;
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 

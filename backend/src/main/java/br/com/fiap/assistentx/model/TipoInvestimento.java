@@ -10,7 +10,7 @@ import jakarta.persistence.Table;
 public class TipoInvestimento {
     @Id
     @Column(name = "id_investimento_tipo")
-    private int id;
+    private Integer id;
 
     @Column(name = "ds_tipo")
     private String nome;
@@ -27,7 +27,7 @@ public class TipoInvestimento {
     public TipoInvestimento() {
     }
 
-    public TipoInvestimento(int id, String nome, String classificacao, String pagamento, String valorizacao) {
+    public TipoInvestimento(Integer id, String nome, String classificacao, String pagamento, String valorizacao) {
         this.id = id;
         this.nome = nome;
         this.classificacao = classificacao;
@@ -35,7 +35,7 @@ public class TipoInvestimento {
         this.pagamento = pagamento;
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
@@ -47,7 +47,7 @@ public class TipoInvestimento {
         return valorizacao;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

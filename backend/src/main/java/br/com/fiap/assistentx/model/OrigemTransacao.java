@@ -1,7 +1,7 @@
 package br.com.fiap.assistentx.model;
 
 import jakarta.persistence.*;
-import java.time.OffsetDateTime;
+import java.util.List;
 
 @Entity
 @Table(name = "t_ax_origem")
@@ -17,6 +17,9 @@ public class OrigemTransacao {
     @Column(name = "tipo_origem")
     private String tipo;
 
+    @OneToMany(mappedBy = "origem")
+    private List<CategoriaOrigem> categorias;
+
     public Integer getId() {
         return id;
     }
@@ -27,5 +30,9 @@ public class OrigemTransacao {
 
     public String getTipo() {
         return tipo;
+    }
+
+    public List<CategoriaOrigem> getCategorias() {
+        return categorias;
     }
 }
