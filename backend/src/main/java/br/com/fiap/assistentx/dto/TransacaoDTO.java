@@ -1,6 +1,5 @@
 package br.com.fiap.assistentx.dto;
 
-import br.com.fiap.assistentx.model.Transacao;
 import java.time.OffsetDateTime;
 
 public class TransacaoDTO {
@@ -12,6 +11,43 @@ public class TransacaoDTO {
     private Integer origemId;
     private String origemNome;
     private String origemTipo;
+
+    public TransacaoDTO (){}
+
+    public TransacaoDTO (
+            Integer usuarioId,
+            Double valor,
+            OffsetDateTime dataHora,
+            Integer origemId
+    ) {
+        this(
+                null,
+                usuarioId,
+                valor,
+                dataHora,
+                origemId,
+                null,
+                null
+        );
+    }
+
+    public TransacaoDTO (
+            Integer transacaoId,
+            Integer usuarioId,
+            Double valor,
+            OffsetDateTime dataHora,
+            Integer origemId
+    ) {
+        this(
+                transacaoId,
+                usuarioId,
+                valor,
+                dataHora,
+                origemId,
+                null,
+                null
+        );
+    }
 
     public TransacaoDTO (
             Integer transacaoId,

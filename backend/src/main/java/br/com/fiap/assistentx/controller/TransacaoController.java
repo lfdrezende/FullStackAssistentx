@@ -39,13 +39,13 @@ public class TransacaoController {
         return transacaoService.buscarPorId(usuarioId,transacaoId,"E");
     }
 
-    @DeleteMapping("/entradas/{id}")
+    @DeleteMapping("/entradas/{transacaoId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void excluirEntrada(@PathVariable Integer usuarioId, @PathVariable Integer transacaoId){
         transacaoService.excluir(usuarioId, transacaoId,"E");
     }
 
-    @PutMapping("/entradas/{id}")
+    @PutMapping("/entradas/{transacaoId}")
     @ResponseStatus(HttpStatus.OK)
     public TransacaoDTO atualizarEntrada(@RequestBody TransacaoDTO transacaoDTO){
         return transacaoService.atualizar(transacaoDTO, "E");
@@ -70,19 +70,19 @@ public class TransacaoController {
         return transacaoService.listar(usuarioId,"S");
     }
 
-    @GetMapping("/saidas/{id}")
+    @GetMapping("/saidas/{transacaoId}")
     @ResponseStatus(HttpStatus.OK)
-    public TransacaoDTO buscarSaidaPorId(@PathVariable Integer usuarioId,@PathVariable Integer transacaoId){
+    public TransacaoDTO buscarSaidaPorId(@PathVariable Integer usuarioId, @PathVariable Integer transacaoId){
         return transacaoService.buscarPorId(usuarioId, transacaoId,"S");
     }
 
-    @DeleteMapping("/saidas/{id}")
+    @DeleteMapping("/saidas/{transacaoId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void excluirSaida(@PathVariable Integer usuarioId, @PathVariable Integer transacaoId){
         transacaoService.excluir(usuarioId, transacaoId,"S");
     }
 
-    @PutMapping("/saidas/{id}")
+    @PutMapping("/saidas/{transacaoId}")
     @ResponseStatus(HttpStatus.OK)
     public TransacaoDTO atualizarSaida(@RequestBody TransacaoDTO transacaoDTO){
         return transacaoService.atualizar(transacaoDTO, "S");

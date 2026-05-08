@@ -112,9 +112,7 @@ public class ResumoModeloService {
         return "MUITO_ACIMA_DO_LIMITE";
     }
 
-    private Map<Integer, Double> agruparGastosPorCategoria(
-            List<Transacao> saidas
-    ) {
+    private Map<Integer, Double> agruparGastosPorCategoria(List<Transacao> saidas) {
 
         return saidas.stream()
 

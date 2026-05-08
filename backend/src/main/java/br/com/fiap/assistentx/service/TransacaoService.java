@@ -2,7 +2,6 @@ package br.com.fiap.assistentx.service;
 
 
 import br.com.fiap.assistentx.dto.TransacaoDTO;
-import br.com.fiap.assistentx.model.Investimento;
 import br.com.fiap.assistentx.model.Transacao;
 import br.com.fiap.assistentx.repository.OrigemTransacaoRepository;
 import br.com.fiap.assistentx.repository.TransacaoRepository;
@@ -35,8 +34,13 @@ public class TransacaoService {
 
     public TransacaoDTO salvar(TransacaoDTO transacaoDTO, String tipo){
 
-        if(transacaoDTO.getOrigemTipo().equals("E") && transacaoDTO.getValor() < 0 ||
-                transacaoDTO.getOrigemTipo().equals("S") && transacaoDTO.getValor() > 0) {
+        String tipoOrigem = HelperService.buscar(
+                origemTransacaoRepository,
+                transacaoDTO.getOrigemId(),
+                "Origem da Transação").getTipo();
+
+        if(tipoOrigem.equals("E") && transacaoDTO.getValor() < 0 ||
+                tipoOrigem.equals("S") && transacaoDTO.getValor() > 0) {
             throw new RuntimeException("Valor inválido para este tipo");
         }
 
