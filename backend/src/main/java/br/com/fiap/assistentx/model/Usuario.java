@@ -14,6 +14,9 @@ public class Usuario {
     @Column(name = "ds_email")
     private String email;
 
+    @Column(name = "ds_senha")
+    private String senha;
+
     @Column(name = "nm_usuario")
     private String nome;
 
@@ -58,4 +61,12 @@ public class Usuario {
     }
 
     public void setId(Integer id) {this.id = id;}
+
+    public String getSenha() {
+        return senha;
+    }
+
+    public void setSenha(String senha) {
+        this.senha = senha;
+    }
 }
