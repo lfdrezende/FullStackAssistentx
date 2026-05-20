@@ -1,23 +1,41 @@
 package br.com.fiap.assistentx.dto;
 
-public class UsuarioModeloDTO {
+public class UsuarioSenhaDTO {
 
-    private Integer usuarioId;
-    private Integer modeloId;
+    private Integer id;
+    private String usuario;
+    private String senha;
+    private String token;
 
-    public Integer getUsuarioId() {
-        return usuarioId;
+    public Integer getId() {
+        return id;
     }
 
-    public Integer getModeloId() {
-        return modeloId;
+    public void setId(Integer usuarioId) {
+        this.id = usuarioId;
     }
 
-    public void setUsuarioId(Integer usuarioId) {
-        this.usuarioId = usuarioId;
+    public String getUsuario() {
+        return usuario;
     }
 
-    public void setModeloId(Integer modeloId) {
-        this.modeloId = modeloId;
+    public void setUsuario(String usuario) {
+        this.usuario = usuario;
+    }
+
+    public String getSenha() {
+        return senha;
+    }
+
+    public void setSenha(String senha) {
+        this.senha = senha;
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
     }
 }

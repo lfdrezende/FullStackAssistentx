@@ -2,6 +2,7 @@ package br.com.fiap.assistentx.service;
 
 import br.com.fiap.assistentx.dto.UsuarioDTO;
 import br.com.fiap.assistentx.dto.UsuarioModeloDTO;
+import br.com.fiap.assistentx.dto.UsuarioSenhaDTO;
 import br.com.fiap.assistentx.model.Usuario;
 import br.com.fiap.assistentx.repository.ModeloRepository;
 import br.com.fiap.assistentx.repository.UsuarioRepository;
@@ -49,6 +50,19 @@ public class UsuarioService {
                 usuario.getModelo().getId(),
                 usuario.getModelo().getNome()
         );
+    }
+
+    public UsuarioSenhaDTO login(UsuarioSenhaDTO dto) {
+
+        Usuario usuario = usuarioRepository.findByEmail(dto.getUsuario())
+                .orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
+
+        if (!usuario.getSenha().equals(dto.getSenha())) {
+            throw new RuntimeException("Senha incorreta");
+        }
+        dto.setId(usuario.getId());
+        dto.setToken("abcdefghijklmnopqrstuvwxyz");
+        return dto;
     }
 
     public Usuario buscarPorId(Integer id){
