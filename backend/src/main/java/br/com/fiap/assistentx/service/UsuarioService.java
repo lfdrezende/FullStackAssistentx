@@ -61,7 +61,7 @@ public class UsuarioService {
             throw new RuntimeException("Senha incorreta");
         }
         dto.setId(usuario.getId());
-        dto.setToken("abcdefghijklmnopqrstuvwxyz");
+        dto.setToken("Bearer usuario_" + usuario.getId());
         return dto;
     }
 
