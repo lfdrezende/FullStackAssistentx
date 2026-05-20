@@ -21,6 +21,7 @@ public class UsuarioController {
     private ResumoModeloService resumoModeloService;
 
     @PostMapping("/login")
+    @ResponseStatus(HttpStatus.OK)
     public UsuarioSenhaDTO login(@RequestBody UsuarioSenhaDTO dto) {
         return usuarioService.login(dto);
     }
